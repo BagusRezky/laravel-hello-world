@@ -17,10 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return 'Hello';
-});
-
 // Praktikum1
 Route::get('/selamat datang', function () {
     return "Selamat Datang";
