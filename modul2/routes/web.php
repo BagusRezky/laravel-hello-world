@@ -58,7 +58,7 @@ Route::get('/', function () {
 Route::get('/hello', [WelcomeController::class, 'hello']);
 
 Route::get('/app', function (){
-    return view('layouts.app');
+    return view('child');
 });
 
 Auth::routes();
