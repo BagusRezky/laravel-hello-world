@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Route::get('/hello', function () {
 //     return 'Hello';
@@ -36,8 +38,25 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Praktikum2
-Route::get('/',[PageController::class,'index']);
+// Route::get('/',[PageController::class,'index']);
 
-Route::get('/about',[PageController::class,'about']);
+// Route::get('/about',[PageController::class,'about']);
 
-Route::get('/articles/{id}',[PageController::class,'articles']);
+// Route::get('/articles/{id}',[PageController::class,'articles']);
+
+//percobaan view
+// Route::get('/hello', function () {
+//     return view('hello', ['nama' => 'Andi']);
+// });
+
+// didalam direktori/folder
+// Route::get('/hello', function () {
+//     return view('blog.hello', ['nama' => 'Rezky']);
+// });
+
+//Menampilkan View dari Controller
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+Route::get('/app', function (){
+    return view('layouts.app');
+});
