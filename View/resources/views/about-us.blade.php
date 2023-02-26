@@ -1,5 +1,4 @@
 @extends('layouts.main')
-
 @section('header-content')
     <div class="templatemo-welcome welcome-slider">
         <div class="container">
