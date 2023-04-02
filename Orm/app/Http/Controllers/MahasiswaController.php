@@ -4,19 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Spatie\LaravelIgnition\Recorders\QueryRecorder\Query;
+use App\Http\Requests\MahasiswaCreateRequests;
 
 class MahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswas = Mahasiswa::all();
-        $mahasiswas = Mahasiswa::orderBy('Nim', 'desc')-> paginate(6);
+        //ikut jobsheet
+        if($request->has('search')){
+            $mahasiswas = Mahasiswa::where('Nama','Like','%'.$request->search.'%')->paginate(5);
+        }else{
+            $mahasiswas = Mahasiswa::all();
+            $mahasiswas = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);
+        }
+
         return view('mahasiswas.index', compact('mahasiswas'));
         with('i', (request()->input('page', 1) - 1) * 5);
+        // menggunakan fitur pencarian dengan kolom relasi
+        // $research = $request->research;
+        // $mahasiswas = Mahasiswa::with('Kelas')
+        //                 ->where('Nama', 'LIKE', '%'.$research.'%')
+        //                 ->orWhere('Nim', 'LIKE', '%'.$research.'%')
+        //                 ->orWhere('Jurusan', 'LIKE', '%'.$research.'%')
+        //                 ->orWhere('No_Handphone', 'LIKE', '%'.$research.'%')
+        //                 ->orWhereHas('Kelas', function($query){
+        //                     $query->where('Nama', 'LIKE', '%'.$research.'%');
+        //                 })
+        //                 ->paginate(5);
+        // return view('mahasiswas.index', ['Mahasiswa' => $mahasiswas]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
