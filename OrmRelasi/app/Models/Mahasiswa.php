@@ -16,11 +16,9 @@ class Mahasiswa extends Model
     * The attributes that are mass assignable.* *
     @var array
     */
-    protected $fillable = [
-        'Nim',
-        'Nama',
-        'Kelas',
-        'Jurusan',
-        'No_Handphone',
-        ];
+    protected $guarded = ['id'];
+        public function kelas()
+    {
+        return $this->belongsTo(Kelas::class,'kelas_id','id');
+    }
 }

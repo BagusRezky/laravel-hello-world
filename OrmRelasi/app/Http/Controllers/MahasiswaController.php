@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Spatie\LaravelIgnition\Recorders\QueryRecorder\Query;
@@ -18,24 +19,12 @@ class MahasiswaController extends Controller
         if($request->has('search')){
             $mahasiswas = Mahasiswa::where('Nama','Like','%'.$request->search.'%')->paginate(5);
         }else{
-            $mahasiswas = Mahasiswa::all();
-            $mahasiswas = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);
+            $mahasiswas = Mahasiswa::with('kelas')->get();
+            $paginate = Mahasiswa::orderBy('id_mahasiswa', 'asc')->paginate(3);
         }
 
-        return view('mahasiswas.index', compact('mahasiswas'));
-        with('i', (request()->input('page', 1) - 1) * 5);
-        // menggunakan fitur pencarian dengan kolom relasi
-        // $research = $request->research;
-        // $mahasiswas = Mahasiswa::with('Kelas')
-        //                 ->where('Nama', 'LIKE', '%'.$research.'%')
-        //                 ->orWhere('Nim', 'LIKE', '%'.$research.'%')
-        //                 ->orWhere('Jurusan', 'LIKE', '%'.$research.'%')
-        //                 ->orWhere('No_Handphone', 'LIKE', '%'.$research.'%')
-        //                 ->orWhereHas('Kelas', function($query){
-        //                     $query->where('Nama', 'LIKE', '%'.$research.'%');
-        //                 })
-        //                 ->paginate(5);
-        // return view('mahasiswas.index', ['Mahasiswa' => $mahasiswas]);
+        return view('mahasiswas.index', ['mahasiswa' => $mahasiswas,'paginate'=>$paginate]);
+
     }
 
 
